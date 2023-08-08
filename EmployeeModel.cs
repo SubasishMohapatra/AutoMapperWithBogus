@@ -12,7 +12,8 @@ namespace AutoMapperWithBogus
         public string Email { get; set; } = default!;
         public string AboutMe { get; set; } = default!;
         public int YearsOld { get; set; }
-        public List<VehicleModel> Vehicles { get; set; } = default!;
+
+        public List<IVehicle> Vehicles { get; set; }
 
         public override string ToString()
         {

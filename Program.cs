@@ -6,13 +6,7 @@ namespace AutoMapperWithBogus
     {
         public static void Main(string[] args)
         {
-            var employees = FakeGenerator.GetBogusEmployeeData();
-            foreach (var employee in employees)
-            {
-                var vehicles = FakeGenerator.GetBogusVehicleData(employee.Id);
-                employee.Vehicles = vehicles;
-            }
-
+            var employees = FakeGenerator.GenerateFakeEmployees(5);
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             var mapper = config.CreateMapper();
 
@@ -26,21 +20,28 @@ namespace AutoMapperWithBogus
                 Email = "john@example.com",
                 AboutMe = "Software Developer",
                 YearsOld = 30,
-                Vehicles = new List<VehicleEntity>
+                Vehicles = new List<IVehicle>
             {
-                new VehicleEntity
+                new CarEntity
                 {
-                    EmployeeId=employeeId,
                     Id = Guid.NewGuid(),
                     Manufacturer = "Toyota",
-                    Fuel = "Gasoline"
+                    Fuel = "Gasoline",
+                    NumberOfDoors=4
+                },
+                 new TruckEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Manufacturer = "Toyota",
+                    Fuel = "Gasoline",
+                    PayloadCapacity=30
                 }
             }
             };
 
-            EmployeeModel employeeModel = mapper.Map<EmployeeModel>(employeeEntity);
+            //EmployeeModel employeeModel = mapper.Map<EmployeeModel>(employeeEntity);
 
-            var employeesModel= mapper.Map<List<EmployeeModel>>(employees);
+            var employeesModel = mapper.Map<List<EmployeeModel>>(employees);
 
             Console.ReadLine();
         }
