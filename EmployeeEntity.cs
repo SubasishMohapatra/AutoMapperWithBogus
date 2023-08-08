@@ -12,11 +12,6 @@ namespace AutoMapperWithBogus
         public string Email { get; set; } = default!;
         public string AboutMe { get; set; } = default!;
         public int YearsOld { get; set; }
-        public List<VehicleEntity> Vehicles { get; set; } = default!;
-
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
-        }
+        public List<IVehicle> Vehicles { get; set; }
     }
 }
